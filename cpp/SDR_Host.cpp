@@ -91,7 +91,7 @@ int SDR_Host_i::serviceFunction()
 	struct ifreq loc_ifr;
 
 	/* Creating shared memroy */
-	loc_shm_key = ftok("/home", SHM_SEG_KEY);
+	loc_shm_key = ftok("/home/root/", SHM_SEG_KEY);
 	if((loc_shmid = shmget(loc_shm_key, SHM_SEG_SIZE, 0666)) < 0)
 	{
 		perror("shmget() failed");
@@ -107,7 +107,7 @@ int SDR_Host_i::serviceFunction()
 	}
 
 	/* Creating message queue to send data from ARM to DSP */ 
-	loc_msg_key = ftok("/home", MSGQ_KEY_TX);
+	loc_msg_key = ftok("/home/root/", MSGQ_KEY_TX);
 	g_ip_Mid_Tx = msgget(loc_msg_key, 0666 | IPC_CREAT);
    
 	if(g_ip_Mid_Tx < 0)
@@ -117,7 +117,7 @@ int SDR_Host_i::serviceFunction()
 
 	/*Get messageQ Id created by server to receive data*/
 	key_t loc_msg_key_Rx;
-	loc_msg_key_Rx = ftok("/home", MSGQ_SNMP_KEY);
+	loc_msg_key_Rx = ftok("/home/root/", MSGQ_SNMP_KEY);
 	loc_ipSnmpId = msgget(loc_msg_key_Rx, IPC_CREAT | 0666);
 
 	if(loc_ipSnmpId < 0)
